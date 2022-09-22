@@ -6,7 +6,6 @@
 ## Clonando o projeto
 ```
   git clone https://github.com/YrllanBrandao/onepiece_api.git
-
 ```
 ### PORTA PADRÃO
 ```
@@ -15,7 +14,6 @@
 ## Instalando dependências
 ```
   npm install
-
 ```
 
 ## inciando o projeto
