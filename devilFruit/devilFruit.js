@@ -8,19 +8,21 @@ const Sequelize = require('sequelize');
 const DevilFruit = Connection.define('devilfruit', {
     picture:{
         type:Sequelize.STRING,
-        defaultValue: './src/onepiece/devilfruit/placeholder.svg'
+        // defaultValue: 'https://i.postimg.cc/1XNjfL24/placeholder.webp'
+        allowNull:false
     },
     japaneseName:{
         type: Sequelize.STRING,
-        allowNull: false
+        defaultValue: "",
     },
     portugueseName:{
         type: Sequelize.STRING,
-        allowNull: false
+        defaultValue: "",
     },
     englishName:{
         type: Sequelize.STRING,
-        allowNull: false
+        defaultValue: "",
+        
     },
     meaning:{
         type: Sequelize.STRING,

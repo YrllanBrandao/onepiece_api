@@ -12,15 +12,7 @@ const slugify = require('slugify');
 
 
 //multer
-const filefilter = (req, file, cb) => {
-    if (
-        file.mimetype === "image/png"
-    ) {
-        cb(null, true);
-    } else {
-        cb(null, false);
-    }
-};
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, './src/onepiece/character')
@@ -36,15 +28,31 @@ const upload = multer({
     storage, limits: {
         fileSize: '5MB'//5MB,
     }
-}, filefilter);
+});
 
 
 //Routes
+//getting all characters
+Router.get("/characters", (req,res)=>{
+
+    Character.findAll().then(characteres =>{
+        if(characteres[0] === null)
+        {
+            res.status(404).send("EMPTY")
+        }
+        else{
+            res.status(200).json(characteres)
+        }
+    })
+})
+
+//finding character by name
+
 Router.get('/character/:name', (req, res) => {
 
 
     const name = req.params.name;
-    const param = `%${name}`;
+    const param = `%${name}%`;
     Character.findAll({
         where: {
             portugueseName: {
@@ -61,6 +69,9 @@ Router.get('/character/:name', (req, res) => {
     })
 
 })
+
+// creating characters
+
 Router.post('/character', upload.fields([{ name: 'beforeTimeSkipPicture' }, { name: 'afterTimeSkipPicture' }]), async (req, res) => {
     const regex = /\./g;
     const { portugueseName, beforeTimeSkipPicture, afterTimeSkipPicture, ...character} = await req.body;
@@ -80,4 +91,73 @@ Router.post('/character', upload.fields([{ name: 'beforeTimeSkipPicture' }, { na
     
 })
 
+//delete character by id
+Router.delete('/character/:id', (req, res) => {
+
+
+    const id = req.params.id;
+   
+    Character.findOne({
+        where: {
+            id
+        }
+    }).then(character =>{
+        if(character === null)
+        {
+            res.status(400).send("INVALID ID");
+        }
+        else{
+            Character.destroy({
+                where: {
+                        id
+                }
+            }).then(desut => {
+               
+                
+                    res.status(200).json({
+                        'response': 'The character was deleted!'
+                    });
+                
+            })
+        }
+    })
+
+});
+//updating by id
+//updating the fruit by id
+Router.put('/character/:id', upload.fields([{ name: 'beforeTimeSkipPicture' }, { name: 'afterTimeSkipPicture' }]),(req, res) => {
+
+
+    const {...others} = req.body;
+
+
+    const id = req.params.id;
+   
+    Character.findOne({
+        where: {
+            id
+        }
+    }).then(character =>{
+        if(character === null)
+        {
+            res.status(400).send("INVALID ID");
+        }
+        else{
+            
+            Character.update({...others},{
+                where: {
+                        id
+                }
+            }).then(result => {
+               
+                
+                    res.status(200).json({
+                        'response': 'The character was updated!'
+                    });
+                
+            })
+        }
+    })
+
+});
 module.exports = Router;

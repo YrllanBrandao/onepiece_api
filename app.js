@@ -3,25 +3,42 @@ const app = express();
 const PORT = 8080;
 const cors = require('cors');
 
-
+//
 app.use(cors());
 app.use(express.urlencoded({extended: true}));
+
 app.use(express.json());
 app.use(express.static('src'))
 
+
+
 //Controllers
-const characterController = require('./character/characterController');
+const UserController = require('./user/UserController');
+const CharacterController = require('./character/characterController');
+const DevilFruitController = require('./devilFruit/devilFruitController');
 
 
 
-app.use('/', characterController);
+app.use('/', CharacterController);
+app.use('/', UserController);
+app.use('/', DevilFruitController);
 app.get('/', (req,res)=>{
 
         res.send('working');
 });
 
 
-app.get('/picture/:name',  (req, res)=>{
+
+app.get('/devilfruitpicture/:name',  (req, res)=>{
+    
+    const image = req.params.name;
+   
+    const url = `${__dirname}/src/onepiece/devilFruit/${image}`;
+    res.sendFile(url)
+
+})
+
+app.get('/character_picture/:name',  (req, res)=>{
     
     const image = req.params.name;
    
@@ -29,8 +46,6 @@ app.get('/picture/:name',  (req, res)=>{
     res.sendFile(url)
 
 })
-
-
 
 app.listen(PORT, ()=>{
     console.log('===on===');
