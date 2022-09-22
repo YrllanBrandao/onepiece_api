@@ -85,4 +85,48 @@
     }
 ```
 
+### Deletar uma Akuma no mi por ID
 
+
+
+### Request
+
+`DELETE /devilfruit/ID`
+
+
+
+### Response
+```
+    Thu, 22 Sep 2022 02:35:01 GMT
+    Status: 200 OK
+    Connection: keep-alive
+    Content-Type: application/json
+    Content-Length: 861
+
+    {
+        'response': 'devil fruit was deleted!'
+    }
+```
+
+### Atualizando dados de uma Akuma no mi por ID
+
+
+
+### Request
+
+`PUT /devilfruit/ID`
+
+
+
+### Response
+```
+    Thu, 22 Sep 2022 02:35:01 GMT
+    Status: 200 OK
+    Connection: keep-alive
+    Content-Type: application/json
+    Content-Length: 861
+
+    {
+        'response': 'devil fruit was updated!'
+    }
+```
